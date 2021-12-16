@@ -150,16 +150,42 @@ void spreadIce(int** matrix, int rows, int cols, int dustRowPosition, int dustCo
     spreadDownLeft(matrix, rows, cols, dustRowPosition, dustColPosition);
 }
 
-void generateSnowflakes(int** matrix, int rows, int cols) {
-    int previusValue = 0;
+int** copyMatrix(int** matrix, int rows, int cols) {
+    int** copiedMatrix = new int*[rows];
+
+    for (size_t i = 0; i < rows; i++) {
+         copiedMatrix[i] = new int[cols];
+    }
+
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
-            if(matrix[i][j] != 0 && previusValue - matrix[i][j] != 0) {
+            copiedMatrix[i][j] = matrix[i][j];
+        }
+    }
+
+    return copiedMatrix;
+}
+
+void deleteMatrix(int ** matrix,int rows) {
+    for (size_t i = 0; i < rows; i++) {
+        delete [] matrix[i];
+    }
+    delete[] matrix;
+}
+
+void generateSnowflakes(int** matrix, int rows, int cols) {
+    int previusValue = 0;
+    int** originalMatrix = copyMatrix(matrix, rows, cols);
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            if(matrix[i][j] != 0 && originalMatrix[i][j] != 0) {
                 previusValue = matrix[i][j];
                 spreadIce(matrix, rows, cols, i, j);
             }
         }
     }
+
+    deleteMatrix(originalMatrix, rows);
 }
 
 
@@ -176,20 +202,21 @@ int fact(int n) {
 }
 
 int main() {
-    // int rows = 5;
-    // int cols = 5;
-    // int** matrix = new int*[rows];
+    int rows = 5;
+    int cols = 5;
+    int** matrix = new int*[rows];
 
-    // for (size_t i = 0; i < rows; i++) {
-    //     matrix[i] = new int[cols];
-    // }
+    for (size_t i = 0; i < rows; i++) {
+        matrix[i] = new int[cols];
+    }
 
-    // initMatrix(matrix, rows, cols);
+    initMatrix(matrix, rows, cols);
 
-    // generateSnowflakes(matrix, rows, cols);
-    // printMatrix(matrix, rows, cols);
+    generateSnowflakes(matrix, rows, cols);
+    printMatrix(matrix, rows, cols);
+    deleteMatrix(matrix, rows);
 
-    int result = fact(-1);
+    // int result = fact(-1);
 
-    cout << result;
+    // cout << result;
 }
