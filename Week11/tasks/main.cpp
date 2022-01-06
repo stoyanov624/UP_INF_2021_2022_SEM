@@ -201,22 +201,29 @@ int fact(int n) {
     return n * fact(n - 1);
 }
 
-int main() {
-    int rows = 5;
-    int cols = 5;
-    int** matrix = new int*[rows];
-
-    for (size_t i = 0; i < rows; i++) {
-        matrix[i] = new int[cols];
+void test_recursion(char* sentence) {
+    if(*sentence == '\0') {
+        return;
     }
+    char upper = char(*sentence - 32);
+    *sentence = upper;
+    test_recursion(sentence + 1);
+}
 
-    initMatrix(matrix, rows, cols);
+int main() {
+    // int rows = 5;
+    // int cols = 5;
+    // int** matrix = new int*[rows];
 
-    generateSnowflakes(matrix, rows, cols);
-    printMatrix(matrix, rows, cols);
-    deleteMatrix(matrix, rows);
+    // for (size_t i = 0; i < rows; i++) {
+    //     matrix[i] = new int[cols];
+    // }
 
-    // int result = fact(-1);
+    // initMatrix(matrix, rows, cols);
+
+    // generateSnowflakes(matrix, rows, cols);
+    // printMatrix(matrix, rows, cols);
+    // deleteMatrix(matrix, rows);
 
     // cout << result;
 }
